@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>State and lyfecycles</h1>
+    <div id="root"></div>
+
+    <!-- React -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!-- bavel-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        class Clock extends React.Component {
+            //states = 
+            //1 monted 
+            //2 update
+            //3 Unmonter
+            //La methode set state = 
+            constructor(props) {
+                super(props);
+                this.state = {date: new Date()};
+                console.log("constructor(props)");
+                
+            }
+
+            //Montage OK 
+            componentDidMount(){
+                console.log("componentDidMount()");
+                this.timerID = setInterval(() =>  this.tick(), 1000);
+            }
+
+            //On ne verra jamais
+            componentWillUnmount(){
+                console.log("componentWillUnmount()");
+            }
+
+            //chrono
+            tick() {
+                console.log('tick() before render');
+                this.setState((state, props) => ({date: new Date()}));
+                console.log('tick() after render');
+            }
+
+            //Rendu du DOM
+            render() {
+                console.log("render()");
+                return (
+                    <ShowClock theDate = {this.state.date}/>
+                );
+            }
+        }
+
+        function ShowClock(props){
+            return(
+                <div>
+                    <h1>Hello, world!</h1>
+                    <h2>It is {props.theDate.toLocaleTimeString()}.</h2>
+                </div>
+            );
+        }
+
+
+       ReactDOM.render(
+            <Clock/>,
+            document.getElementById('root')
+        );
+    </script>
+</body>
+
+</html>

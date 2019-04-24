@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <div id="root3"></div>
+    <div id="root4"></div>
+    <div id="root5"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+            ReactDOM.render(
+                React.createElement("h1", null, "Hello, world without JSX!"),
+                document.getElementById('root')
+            );
+            ReactDOM.render(
+                <h1>Hello, world with JSX!</h1>,
+                document.getElementById('root2')
+            );
+            const name = "Joss Perez";
+            const element3 = <h1> Hello, {name}</h1>
+            ReactDOM.render(
+                element3,
+                document.getElementById('root3')
+            );
+
+            const firstname = 'Perez';
+            const fullName = `Josua ${firstname}`;
+            const element4 = <h1> Hello, {fullName}</h1>
+            ReactDOM.render(
+                element4,
+                document.getElementById('root4')
+            );
+
+            function tick () {
+                var element5 = (
+                    <div>
+                        <h1>
+                            Hello world
+                        </h1>
+                        <h2>
+                            It is {new Date().toLocaleTimeString()}
+                        </h2>
+                    </div>
+                );
+                ReactDOM.render(element5,  document.getElementById('root5'));
+            }
+            setInterval(() => tick() , 1000);
+    </script>
+
+</body>
+
+</html>
