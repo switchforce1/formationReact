@@ -1,11 +1,12 @@
 import React from 'react'
 
 
-export default function TodoForm({values, handleChange }) {
+export default function TodoForm({values, handleChange, handleSubmit, formMessage}) {
     //console.log(completed);
     return (
-        <form >
+        <form onSubmit={handleSubmit}>
             <div className="align-center"> Add or Edit </div>
+            <div className="alert alert-warning"> {formMessage}</div>
             <div className="form-group">
                 <input type="text" value= {values.title} onChange={event => (handleChange(event))} className="form-control" name="title" placeholder="Enter title" />
             </div>

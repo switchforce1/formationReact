@@ -10,6 +10,7 @@ export default class App extends Component {
 
     this.state = {
         todos: [],
+        formMessage : "",
         todoForm : {
           title: "",
           completed : true
@@ -23,8 +24,6 @@ export default class App extends Component {
   
   deleteTodo = (todo)=>{
     const url_delete = `${this.URL_TODOS}/${todo.id}`;
-    console.log("call todo ");
-    console.log(todo);
     fetch(url_delete,{method:'DELETE'})
       .then(_ => this.loadTodo());
   }
@@ -43,8 +42,29 @@ export default class App extends Component {
     });
   }
 
+  formSubmit = (event) => {
+      console.log("submit")
+      event.preventDefault();
+      let todo =  this.state.todoForm;
+      this.saveTodo(todo)
+  }
+
+  saveTodo = (todo) => {
+    const conf = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(todo)
+    }
+
+    fetch(this.URL_TODOS,conf)
+      .then(_ => this.loadTodo())
+  }
+
   loadTodo(){
-    fetch(this.URL_TODOS)
+    fetch(`${this.URL_TODOS}?_sort=id&_order=desc`)
     .then(response => response.json())
     .then(todos => this.setState({todos : todos}));
   }
@@ -53,7 +73,7 @@ export default class App extends Component {
     const todos = this.state.todos;
     return (
       <div className="container">
-        <TodoForm values={this.state.todoForm} handleChange={this.formUpdate}/>
+        <TodoForm values={this.state.todoForm} handleChange={this.formUpdate} handleSubmit={this.formSubmit} formMessage={this.formMessage}/>
         <TodoList todos={todos} deleteAction={this.deleteTodo}/>
       </div>
     )
